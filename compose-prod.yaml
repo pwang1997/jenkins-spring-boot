@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  mysql:
+    image: 'mysql:8.1.0'
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: erp
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+
+  backend:
+    build:
+      - context: .
+      - dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql/erp?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    restart: on-failure
+    depends_on:
+      - mysql
+
+
+volumes:
+  mysql-data:
