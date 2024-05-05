@@ -4,5 +4,5 @@ import java.util.concurrent.CompletableFuture;
 
 public interface AsyncSQLExecutor {
 
-    CompletableFuture<?> doAction(String action);
+  CompletableFuture<?> doAction(String action);
 }

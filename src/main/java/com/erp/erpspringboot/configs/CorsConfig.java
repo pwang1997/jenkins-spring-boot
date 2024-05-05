@@ -9,18 +9,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class CorsConfig implements WebMvcConfigurer {
 
-    private final SecretConfig secretConfig;
+  public CorsConfig() {
+  }
 
-    public CorsConfig(SecretConfig secretConfig) {
-        this.secretConfig = secretConfig;
-    }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*") // Replace with your React app's domain
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*") // Allow custom headers
-                .maxAge(3600); // Max age of CORS preflight cache
-    }
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/api/**")
+        .allowedOrigins("*") // Replace with your React app's domain
+        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        .allowedHeaders("*") // Allow custom headers
+        .maxAge(3600); // Max age of CORS preflight cache
+  }
 }
