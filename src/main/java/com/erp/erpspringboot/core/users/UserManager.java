@@ -2,6 +2,7 @@ package com.erp.erpspringboot.core.users;
 
 import com.erp.erpspringboot.core.users.dao.UserDao;
 import com.erp.erpspringboot.core.users.model.UserBO;
+import com.erp.erpspringboot.exceptions.UserValidationException;
 import com.erp.erpspringboot.utils.BOUtils;
 import com.erp.erpspringboot.utils.SecurityUtils;
 import jakarta.persistence.EntityNotFoundException;
@@ -48,7 +49,7 @@ public class UserManager {
     String hashedPassword = SecurityUtils.sha256(password);
 
     if (!hashedPassword.equals(userBO.getPassword())) {
-      throw new RuntimeException("用户名/密码错误");
+      throw new UserValidationException("用户名/密码错误");
     }
   }
 

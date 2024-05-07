@@ -8,10 +8,13 @@ import com.erp.erpspringboot.core.users.UserManager;
 import com.erp.erpspringboot.core.users.mapper.UserMapper;
 import com.erp.erpspringboot.core.users.model.UserBO;
 import com.erp.erpspringboot.core.users.model.UserDTO;
+import com.erp.erpspringboot.utils.JwtTokenUtils;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,10 +42,13 @@ public class UserControllerImpl implements UserController {
 
   private final UserManager userManager;
   private final UserMapper userMapper;
+  private final JwtTokenUtils jwtTokenUtils;
 
-  public UserControllerImpl(UserManager userManager, UserMapper userMapper) {
+  public UserControllerImpl(UserManager userManager, UserMapper userMapper,
+      @Lazy JwtTokenUtils jwtTokenUtils) {
     this.userManager = userManager;
     this.userMapper = userMapper;
+    this.jwtTokenUtils = jwtTokenUtils;
   }
 
   @Override
@@ -94,6 +100,7 @@ public class UserControllerImpl implements UserController {
   public ResponseEntity<?> login(@Validated @RequestBody UserDTO userDTO) {
     UserBO userBO = userMapper.mapToBO(userDTO);
     userManager.validateCredentials(userBO.getUsername(), userBO.getPassword());
-    return ResponseEntity.ok().build();
+    Map<String, String> map = Map.of("token", jwtTokenUtils.generateToken(userDTO));
+    return ResponseEntity.ok(map);
   }
 }

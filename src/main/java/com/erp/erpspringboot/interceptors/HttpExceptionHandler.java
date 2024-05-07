@@ -1,5 +1,6 @@
 package com.erp.erpspringboot.interceptors;
 
+import com.erp.erpspringboot.exceptions.UserValidationException;
 import com.erp.erpspringboot.utils.ExceptionUtils;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Map;
@@ -38,6 +39,12 @@ public class HttpExceptionHandler {
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ResponseEntity<String> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+    return ResponseEntity.badRequest().body(ex.getMessage());
+  }
+
+  @ExceptionHandler(UserValidationException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseEntity<String> handleUserValidationException(UserValidationException ex) {
     return ResponseEntity.badRequest().body(ex.getMessage());
   }
 }
