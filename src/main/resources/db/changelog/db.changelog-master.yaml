@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - include:
+      file: classpath:/db/changelog/changes/001-init-iam-schema.sql
+      author: pwang
+  - include:
+      file: classpath:/db/changelog/changes/002-insert-default-iam.sql
+      author: pwang
+  - include:
+      file: classpath:/db/changelog/changes/003-init-user-group-schema.sql
+      author: pwang
+  - include:
+      file: classpath:/db/changelog/changes/004-insert-default-user-group.sql
+      author: pwang
+  - include:
+      file: classpath:/db/changelog/changes/005-init-user-group-permission-assn-schema.sql
+      author: pwang
+  - include:
+      file: classpath:/db/changelog/changes/006-insert-user-group-permission-assn.sql
+      author: pwang

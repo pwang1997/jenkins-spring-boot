@@ -7,4 +7,5 @@ package com.erp.erpspringboot.constant;
  */
 public class RestEndpoint {
     public final static String API_V1_VENDORS = "/api/v1/vendors";
+    public final static String API_V1_USERS = "/api/v1/users";
 }
