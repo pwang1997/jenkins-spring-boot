@@ -81,4 +81,9 @@ public class UserManager {
     userBO.setPassword(hashedPassword);
     return userDao.save(userBO);
   }
+
+  public UserBO findByUsername(String username) {
+    return userDao.findByUsername(username);
+  }
+
 }

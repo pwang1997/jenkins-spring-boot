@@ -1,5 +1,6 @@
 package com.erp.erpspringboot.interceptors;
 
+import com.erp.erpspringboot.utils.JwtTokenUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -13,11 +14,18 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 public class TokenValidationInterceptor  implements HandlerInterceptor {
+
+  private final JwtTokenUtils jwtTokenUtils;
+
+  public TokenValidationInterceptor(JwtTokenUtils jwtTokenUtils) {
+    this.jwtTokenUtils = jwtTokenUtils;
+  }
+
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
     // Get the Authorization header value (Bearer token)
-    String token = request.getHeader("Authorization");
+    String token = request.getHeader("X-Token");
 
     // Validate the token (you can implement your token validation logic here)
     if (isValidToken(token)) {
@@ -30,8 +38,6 @@ public class TokenValidationInterceptor  implements HandlerInterceptor {
   }
 
   private boolean isValidToken(String token) {
-    // Implement your token validation logic here
-    // Return true if the token is valid, false otherwise
-    return true;
+    return jwtTokenUtils.validateToken(token);
   }
 }

@@ -1,5 +1,7 @@
 package com.erp.erpspringboot.utils;
 
+import com.erp.erpspringboot.core.users.UserManager;
+import com.erp.erpspringboot.core.users.model.UserBO;
 import com.erp.erpspringboot.core.users.model.UserDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -22,16 +24,21 @@ import org.springframework.stereotype.Component;
 public class JwtTokenUtils {
 
   private final String secret = "rx1LDHwiT8p3K7qNwuyeSa9Bp8VipS2N8VipS2NT8p3K7qNw";
-  private final long duration = 3_600_000L;
+  private final long EXPIRED_AFTER_EIGHT_HOURS = 8 * 3_600_000L;
+  private final UserManager userManager;
+
+  public JwtTokenUtils(UserManager userManager) {
+    this.userManager = userManager;
+  }
 
   public String generateToken(UserDTO user) {
-    System.out.println(new Date(System.currentTimeMillis() + duration));
+    System.out.println(new Date(System.currentTimeMillis() + EXPIRED_AFTER_EIGHT_HOURS));
     Map<String, Object> claims = new HashMap<>();
     return Jwts.builder()
         .claims(claims)
         .subject(user.getUsername())
         .issuedAt(new Date())
-        .expiration(new Date(System.currentTimeMillis() + duration))
+        .expiration(new Date(System.currentTimeMillis() + EXPIRED_AFTER_EIGHT_HOURS))
         .signWith(getSigningKey())
         .compact();
   }
@@ -39,6 +46,12 @@ public class JwtTokenUtils {
   public boolean validateToken(String token, UserDTO user) {
     final String username = extractUsername(token);
     return (username.equals(user.getUsername()) && !isTokenExpired(token));
+  }
+
+  public boolean validateToken(String token) {
+    final String username = extractUsername(token);
+    UserBO byUsername = userManager.findByUsername(username);
+    return (username.equals(byUsername.getUsername()) && !isTokenExpired(token));
   }
 
   public String extractUsername(String token) {
