@@ -1,8 +1,10 @@
 package com.erp.erpspringboot.utils;
 
 import com.erp.erpspringboot.core.users.UserManager;
+import com.erp.erpspringboot.core.users.model.PermissionBO;
 import com.erp.erpspringboot.core.users.model.UserBO;
 import com.erp.erpspringboot.core.users.model.UserDTO;
+import com.erp.erpspringboot.core.users.model.UserGroupBO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -10,8 +12,10 @@ import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -43,15 +47,36 @@ public class JwtTokenUtils {
         .compact();
   }
 
-  public boolean validateToken(String token, UserDTO user) {
+  public boolean validateToken(String method, String requestURI, String token) {
+    final String username = extractUsername(token);
+    UserBO userBO = userManager.findByUsername(username);
+
+    return validateToken(token, userBO) && hasValidPermission(method, requestURI, userBO);
+  }
+
+  private boolean validateToken(String token, UserBO user) {
     final String username = extractUsername(token);
     return (username.equals(user.getUsername()) && !isTokenExpired(token));
   }
 
-  public boolean validateToken(String token) {
-    final String username = extractUsername(token);
-    UserBO byUsername = userManager.findByUsername(username);
-    return (username.equals(byUsername.getUsername()) && !isTokenExpired(token));
+  private boolean hasValidPermission(String method, String requestURI, UserBO userBO) {
+    List<UserGroupBO> userGroups = userBO.getUserGroups();
+    List<UserGroupBO> userGroupsWithValidPermission = userGroups.stream()
+        .filter(userGroupBO -> hasValidPermission(method, requestURI, userGroupBO))
+        .toList();
+    return CollectionUtils.isNotEmpty(userGroupsWithValidPermission);
+  }
+
+  private boolean hasValidPermission(String method, String requestURI, UserGroupBO userGroupBO) {
+    List<PermissionBO> permissions = userGroupBO.getPermissions();
+
+    List<PermissionBO> permissionList = permissions.stream()
+        .filter(permission -> requestURI.contains(permission.getResource()))
+        .filter(permission -> PermissionUtils.REST_METHOD_PERMISSION_ACTION_MAP.get(method)
+            .equals(permission.getAction()))
+        .toList();
+
+    return CollectionUtils.isNotEmpty(permissionList);
   }
 
   public String extractUsername(String token) {

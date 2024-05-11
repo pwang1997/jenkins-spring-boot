@@ -41,10 +41,7 @@ public class UserManager {
   @SneakyThrows
   @Transactional
   public void validateCredentials(String username, String password) {
-    UserBO userBO = userDao.findByUsername(username);
-    if (ObjectUtils.isEmpty(userBO)) {
-      throw new EntityNotFoundException("用户名:  " + username + "不存在");
-    }
+    UserBO userBO = this.findByUsername(username);
 
     String hashedPassword = SecurityUtils.sha256(password);
 
@@ -83,7 +80,7 @@ public class UserManager {
   }
 
   public UserBO findByUsername(String username) {
-    return userDao.findByUsername(username);
+    return userDao.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("用户名:  " + username + "不存在"));
   }
 
 }

@@ -28,7 +28,7 @@ public class TokenValidationInterceptor  implements HandlerInterceptor {
     String token = request.getHeader("X-Token");
 
     // Validate the token (you can implement your token validation logic here)
-    if (isValidToken(token)) {
+    if (isValidToken(request, token)) {
       return true; // Allow the request to proceed
     } else {
       // Set response status code to unauthorized if token is invalid
@@ -37,7 +37,10 @@ public class TokenValidationInterceptor  implements HandlerInterceptor {
     }
   }
 
-  private boolean isValidToken(String token) {
-    return jwtTokenUtils.validateToken(token);
+  private boolean isValidToken(HttpServletRequest request, String token) {
+    String method = request.getMethod();
+    String requestURI = request.getRequestURI();
+
+    return jwtTokenUtils.validateToken(method, requestURI, token);
   }
 }
