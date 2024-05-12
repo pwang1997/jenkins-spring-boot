@@ -48,7 +48,7 @@ public class MySQLTestContainer {
       .withReuse(true);
 
   static {
-    System.setProperty(ACTIVE_PROFILES_PROPERTY_NAME, "TEST");
+    System.setProperty(ACTIVE_PROFILES_PROPERTY_NAME, "test");
     mySQLContainer.start();
   }
 
