@@ -1,6 +1,8 @@
 package com.erp.erpspringboot.interceptors;
 
+import com.erp.erpspringboot.exceptions.UserValidationException;
 import com.erp.erpspringboot.utils.ExceptionUtils;
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -39,5 +41,18 @@ public class HttpExceptionHandler {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ResponseEntity<String> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
     return ResponseEntity.badRequest().body(ex.getMessage());
+  }
+
+  @ExceptionHandler(UserValidationException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseEntity<String> handleUserValidationException(UserValidationException ex) {
+    return ResponseEntity.badRequest().body(ex.getMessage());
+  }
+
+  @ExceptionHandler(MalformedJwtException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  public ResponseEntity<String> handleMalformedJwtException(MalformedJwtException ex) {
+    log.warn(ex.getMessage());
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
   }
 }

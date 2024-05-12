@@ -3,6 +3,7 @@ package com.erp.erpspringboot.core.users.model;
 import com.erp.erpspringboot.base.models.BaseBO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -49,7 +50,7 @@ public class UserBO extends BaseBO {
   private String note;
   @Column(columnDefinition = "BOOLEAN DEFAULT FALSE NOT NULL")
   private boolean isDeleted;
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_user_group_assn", joinColumns = {
       @JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "user_group_id")},
       foreignKey = @ForeignKey(name = "FK_USER_ID"), inverseForeignKey = @ForeignKey(name = "FK_USER_GROUP_ID"))
