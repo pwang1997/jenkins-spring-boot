@@ -1,6 +1,7 @@
 package com.erp.erpspringboot.core.users.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,7 +40,7 @@ public class UserGroupBO {
   private String description;
   private String comment;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_group_permission_assn", joinColumns = {
       @JoinColumn(name = "user_group_id")}, inverseJoinColumns = {
       @JoinColumn(name = "permission_id")},

@@ -19,6 +19,7 @@ public class RequestConfig implements WebMvcConfigurer {
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(new HttpRequestInterceptor());
     registry.addInterceptor(new TokenValidationInterceptor(jwtTokenUtils))
+        .excludePathPatterns("/api/*/users/register", "/api/*/users/login")
         .addPathPatterns("/api/**");
   }
 }

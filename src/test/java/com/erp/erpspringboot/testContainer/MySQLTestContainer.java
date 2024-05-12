@@ -4,12 +4,15 @@ import static org.springframework.core.env.AbstractEnvironment.ACTIVE_PROFILES_P
 
 import java.util.Map;
 import javax.sql.DataSource;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -25,7 +28,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @TestPropertySource(locations = {
     "classpath:application-test.properties"
 })
-@ComponentScan(basePackages = {"com.erp.erpspringboot.core.*", "com.erp.erpspringboot.helper.*"})
+@ComponentScan(basePackages = {"com.erp.erpspringboot.core.*", "com.erp.erpspringboot.helper.*",
+    "com.erp.erpspringboot.utils.*"})
+@RunWith(SpringJUnit4ClassRunner.class)
+@AutoConfigureMockMvc
 public class MySQLTestContainer {
 
   private static final String CONTAINER_VERSION = "mysql:8.1.0";

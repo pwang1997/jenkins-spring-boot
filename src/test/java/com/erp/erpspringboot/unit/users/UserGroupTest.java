@@ -2,15 +2,18 @@ package com.erp.erpspringboot.unit.users;
 
 import static com.erp.erpspringboot.utils.PermissionUtils.EDITABLE;
 
-import com.erp.erpspringboot.core.users.dao.PermissionDao;
-import com.erp.erpspringboot.core.users.dao.UserGroupDao;
 import com.erp.erpspringboot.core.users.model.PermissionBO;
 import com.erp.erpspringboot.core.users.model.UserGroupBO;
+import com.erp.erpspringboot.helper.users.PermissionHelper;
+import com.erp.erpspringboot.helper.users.UserGroupHelper;
+import com.erp.erpspringboot.testContainer.MySQLTestContainer;
+import jakarta.transaction.Transactional;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestComponent;
+import org.springframework.test.annotation.Rollback;
 
 /**
  * @author Puck Wang
@@ -18,35 +21,38 @@ import org.springframework.boot.test.context.TestComponent;
  * @created 5/11/2024
  */
 
-@TestComponent
-public class UserGroupTest {
+@Slf4j
+@Transactional
+public class UserGroupTest extends MySQLTestContainer {
 
   @Autowired
-  public UserGroupDao userGroupDao;
-
+  public PermissionHelper permissionHelper;
   @Autowired
-  public PermissionDao permissionDao;
-
+  public UserGroupHelper userGroupHelper;
 
   @Test
+  @Rollback
   public void canCreateUserGroup() {
-    PermissionBO permissionBO = PermissionBO.builder()
-        .name("CanReadInvoice")
-        .resource("invoice")
-        .comment("test invoice permission")
-        .action(EDITABLE)
-        .build();
-    PermissionBO save = permissionDao.save(permissionBO);
+    userGroupHelper.createDefaultUserGroup();
+    List<UserGroupBO> all = userGroupHelper.findAll();
+    Assertions.assertEquals(all.size(), 1);
+  }
 
-    UserGroupBO userGroupBO = UserGroupBO.builder()
-        .permissions(List.of(save))
-        .description("test-description")
-        .name("test-name")
-        .comment("test-comment")
-        .build();
-    UserGroupBO savedUserGroupBO = userGroupDao.save(userGroupBO);
+  @Test
+  @Rollback
+  public void canGetUserGroups() {
+    PermissionBO defaultPermission = permissionHelper.createDefaultPermission();
+    PermissionBO invoicePermission = permissionHelper.createPermission("test-permission-2",
+        "invoice",
+        EDITABLE);
 
-    Assertions.assertNotNull(savedUserGroupBO);
+    userGroupHelper.createUserGroup("test-user-group-1",
+        List.of(defaultPermission, invoicePermission));
+
+    userGroupHelper.createUserGroup("test-user-group-2",
+        List.of(defaultPermission));
+    List<UserGroupBO> all = userGroupHelper.findAll();
+    Assertions.assertEquals(all.size(), 2);
   }
 
 

@@ -7,6 +7,7 @@ import com.erp.erpspringboot.core.users.model.UserDTO;
 import com.erp.erpspringboot.core.users.model.UserGroupBO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
@@ -15,7 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import lombok.SneakyThrows;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -48,10 +51,15 @@ public class JwtTokenUtils {
   }
 
   public boolean validateToken(String method, String requestURI, String token) {
+    if (StringUtils.isEmpty(token)) {
+      return false;
+    }
     final String username = extractUsername(token);
     UserBO userBO = userManager.findByUsername(username);
 
-    return validateToken(token, userBO) && hasValidPermission(method, requestURI, userBO);
+    boolean hasValidToken = validateToken(token, userBO);
+    boolean hasValidPermission = hasValidPermission(method, requestURI, userBO);
+    return hasValidToken && hasValidPermission;
   }
 
   private boolean validateToken(String token, UserBO user) {

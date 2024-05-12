@@ -1,5 +1,7 @@
 package com.erp.erpspringboot.core.users.mapper;
 
+import com.erp.erpspringboot.core.users.model.UserGroupBO;
+import com.erp.erpspringboot.core.users.model.UserGroupDTO;
 import org.mapstruct.Mapper;
 
 /**
@@ -10,5 +12,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface UserGroupMapper {
+  UserGroupDTO mapToDTO(UserGroupBO b);
 
+  UserGroupBO mapToBO(UserGroupDTO d);
 }

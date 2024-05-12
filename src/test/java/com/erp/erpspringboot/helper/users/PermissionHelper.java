@@ -4,6 +4,7 @@ import static com.erp.erpspringboot.utils.PermissionUtils.EDITABLE;
 
 import com.erp.erpspringboot.core.users.dao.PermissionDao;
 import com.erp.erpspringboot.core.users.model.PermissionBO;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;
 
@@ -31,5 +32,9 @@ public class PermissionHelper {
         .action(action)
         .build();
     return permissionDao.save(permissionBO);
+  }
+
+  public List<PermissionBO> findAll() {
+    return permissionDao.findAll();
   }
 }
