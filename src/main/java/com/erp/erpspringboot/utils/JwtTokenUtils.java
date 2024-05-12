@@ -1,5 +1,7 @@
 package com.erp.erpspringboot.utils;
 
+import static com.erp.erpspringboot.utils.PermissionUtils.WILDCARD_ACCESS;
+
 import com.erp.erpspringboot.core.users.UserManager;
 import com.erp.erpspringboot.core.users.model.PermissionBO;
 import com.erp.erpspringboot.core.users.model.UserBO;
@@ -7,7 +9,6 @@ import com.erp.erpspringboot.core.users.model.UserDTO;
 import com.erp.erpspringboot.core.users.model.UserGroupBO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
@@ -16,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import lombok.SneakyThrows;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -78,14 +78,26 @@ public class JwtTokenUtils {
   private boolean hasValidPermission(String method, String requestURI, UserGroupBO userGroupBO) {
     List<PermissionBO> permissions = userGroupBO.getPermissions();
 
-    List<PermissionBO> permissionList = permissions.stream()
-        .filter(permission -> requestURI.contains(permission.getResource()))
-        .filter(permission -> PermissionUtils.REST_METHOD_PERMISSION_ACTION_MAP.get(method)
-            .equals(permission.getAction()))
-        .toList();
-
-    return CollectionUtils.isNotEmpty(permissionList);
+    for (PermissionBO permission : permissions) {
+      if (hasValidPermissionAction(permission, method) &&
+          hasValidPermissionResource(permission, requestURI)) {
+        return true;
+      }
+    }
+    return false;
   }
+
+  private boolean hasValidPermissionAction(PermissionBO permission, String method) {
+    return StringUtils.equals(permission.getAction(), WILDCARD_ACCESS) ||
+        StringUtils.contains(permission.getAction(),
+            PermissionUtils.REST_METHOD_PERMISSION_ACTION_MAP.get(method));
+  }
+
+  private boolean hasValidPermissionResource(PermissionBO permission, String requestURI) {
+    return StringUtils.equals(permission.getResource(), WILDCARD_ACCESS) ||
+        StringUtils.contains(requestURI, permission.getResource());
+  }
+
 
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);

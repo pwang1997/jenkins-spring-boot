@@ -18,6 +18,7 @@ public class PermissionUtils {
 
   public static final String READ_ONLY = "read-only";
   public static final String EDITABLE = "edit";
+  public static final String WILDCARD_ACCESS = "*";
 
   public static final Map<String, String> REST_METHOD_PERMISSION_ACTION_MAP =
       Map.of(GET.name(), READ_ONLY,

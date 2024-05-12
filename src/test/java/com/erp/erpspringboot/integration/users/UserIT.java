@@ -86,6 +86,22 @@ public class UserIT extends MySQLTestContainer {
     user.setPassword("password");
     Assertions.assertNotNull(userHelper.getToken(user));
   }
+  @Test
+  @Rollback
+  public void canValidateUserCredentialWithWildcard() {
+    UserDTO defaultUserDTO = userHelper.createAdminUserDTO();
+    UserDTO createdUserDTO = userHelper.createUser(defaultUserDTO);
+    String oldPassword = createdUserDTO.getPassword(); // hashed password
+    createdUserDTO.setPassword("password");
+    String token = userHelper.getToken(createdUserDTO);
+
+    createdUserDTO.setPassword("newPassword");
+    createdUserDTO.setEmployeeName("updated-employee-name");
+
+    UserDTO updatedUserDTO = userHelper.updateUser(createdUserDTO, token);
+    Assertions.assertNotEquals(updatedUserDTO.getPassword(), oldPassword);
+    Assertions.assertEquals(updatedUserDTO.getEmployeeName(), "updated-employee-name");
+  }
 
 
   @Test

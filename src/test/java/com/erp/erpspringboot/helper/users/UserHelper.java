@@ -49,7 +49,15 @@ public class UserHelper {
   public static final String DEFAULT_USERNAME = "default_user";
 
   public UserDTO createDefaultUserDTO() {
-    UserGroupDTO defaultUserGroup = userGroupMapper.mapToDTO(userGroupHelper.createDefaultUserGroup());
+    UserGroupDTO defaultUserGroup = userGroupMapper.mapToDTO(
+        userGroupHelper.createDefaultUserGroup());
+
+    return createDefaultUserDTO(List.of(defaultUserGroup));
+  }
+
+  public UserDTO createAdminUserDTO() {
+    UserGroupDTO defaultUserGroup = userGroupMapper.mapToDTO(
+        userGroupHelper.createAdminUserGroup());
 
     return createDefaultUserDTO(List.of(defaultUserGroup));
   }
