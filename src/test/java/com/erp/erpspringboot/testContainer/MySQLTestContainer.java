@@ -4,6 +4,8 @@ import static org.springframework.core.env.AbstractEnvironment.ACTIVE_PROFILES_P
 
 import java.util.Map;
 import javax.sql.DataSource;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -53,4 +55,8 @@ public class MySQLTestContainer {
   @Autowired
   protected DataSource dataSource;
 
+  @Test
+  public void testContainerRunning() {
+    Assertions.assertTrue(mySQLContainer.isRunning());
+  }
 }
