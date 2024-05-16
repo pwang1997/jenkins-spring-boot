@@ -13,7 +13,7 @@ import org.springframework.validation.annotation.Validated;
 /**
  * @author Puck Wang
  * @project erp-spring-boot
- * @created 5/6/2024
+ * @created 5/16/2024
  */
 
 @EqualsAndHashCode(callSuper = true)
@@ -23,11 +23,15 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @SuperBuilder
 @JsonInclude
-public class DepotDTO extends BaseDTO {
+public class DepotOutDTO extends BaseDTO { // Sales
 
   private Long id;
   private VendorDTO vendor;
   private String category;
   private String batch;
-  private Long quantity;
+  private Long price; // 单价
+  private Long quantity; // 数量
+  private Long bag; // 包装
+  private Long subTotal; // 总额
+
 }
