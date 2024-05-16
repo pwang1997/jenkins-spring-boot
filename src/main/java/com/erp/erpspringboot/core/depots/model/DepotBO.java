@@ -1,14 +1,19 @@
 package com.erp.erpspringboot.core.depots.model;
 
 import com.erp.erpspringboot.base.models.BaseBO;
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
+import com.erp.erpspringboot.core.vendors.model.VendorBO;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /**
  * @author Puck Wang
@@ -22,12 +27,17 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class DepotBO extends BaseBO {
 
-  @EmbeddedId
-  private DepotId id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-  @Column(nullable = false)
-  private Long quantity;
-
+  @ManyToOne
+  @JoinColumn(name = "vendor_id")
+  private VendorBO vendor; // 供应商
+  private String productCategory; // 品名
+  private String batch; // 批次
+  private Long quantity; // 件数
 }

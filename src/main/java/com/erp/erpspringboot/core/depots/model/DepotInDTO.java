@@ -1,9 +1,10 @@
 package com.erp.erpspringboot.core.depots.model;
 
 import com.erp.erpspringboot.base.models.BaseDTO;
-import com.erp.erpspringboot.core.vendors.model.VendorDTO;
+import com.erp.erpspringboot.core.users.model.UserDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,34 +27,35 @@ import org.springframework.validation.annotation.Validated;
 public class DepotInDTO extends BaseDTO { // invoice
 
   private Long id;
-  private String serialNumber; // 货号
-  private String category;
-  private String batchId;
-  private String traceId;
-  //    到货属性
-  private String specification;
-  private String batch;
 
-  private String brand;
-  //    商品属性
-  private Integer quantity;
-  private Long weight;
-  private Long boxPrice;
-  private Long weightPrice;
-  private Long subtotal;
-  //    对外属性
-  private VendorDTO vendor;
+  // Depot attributes
+  private DepotDTO depot;
 
-  @Column
-  private boolean isDept;
+  // Invoice attributes
+  private String serialNo; // 货号
+  private String makeupId; // 批号柜号
+  private String reference; // 可溯源编号
+  private String spec; // 规格
+  private String brand; // 品牌
 
-  private String accountMethod;
-  private String saleMethod;
-  //    对内属性
-//    private PurchasingAgentBO purchasingAgentBO;
-//    private SalesAgentBO salesAgent;
-//    private String carLicense;
-  // 备注
-  private String comment1;
-  private String comment2;
+  //  Product attributes
+  private Long weight; // 重量
+  private Long pricePerBox; // 箱价
+  private Long pricePerWeight; // 斤价
+  private Long subtotal; // 总价
+  private Boolean isInDebt; // 入库单是否欠账
+
+  @Enumerated(EnumType.STRING)
+  private AccountMethodEnum accountMethod; // 计价方式
+
+  @Enumerated(EnumType.STRING)
+  private SaleMethodEnum saleMethod; // 销售方式
+
+  //  Internal attributes
+  private UserDTO buyer; // 采购
+  private UserDTO salesPerson;  // 业务员
+  private String carLicense; // 车牌
+
+  private String commentOne;
+  private String commentTwo;
 }

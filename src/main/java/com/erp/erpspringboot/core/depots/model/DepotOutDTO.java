@@ -1,7 +1,6 @@
 package com.erp.erpspringboot.core.depots.model;
 
 import com.erp.erpspringboot.base.models.BaseDTO;
-import com.erp.erpspringboot.core.vendors.model.VendorDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,12 +25,8 @@ import org.springframework.validation.annotation.Validated;
 public class DepotOutDTO extends BaseDTO { // Sales
 
   private Long id;
-  private VendorDTO vendor;
-  private String category;
-  private String batch;
+  private DepotDTO depot;
   private Long price; // 单价
-  private Long quantity; // 数量
   private Long bag; // 包装
-  private Long subTotal; // 总额
-
+  private Long subtotal; // 总额
 }

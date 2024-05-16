@@ -1,8 +1,6 @@
 package com.erp.erpspringboot.core.depots.model;
 
 import com.erp.erpspringboot.base.models.BaseBO;
-import com.erp.erpspringboot.base.models.BaseDTO;
-import com.erp.erpspringboot.core.vendors.model.VendorBO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,21 +27,18 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepotOutBO extends BaseBO { // Sales
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "vendor_id")
-  private VendorBO vendor;
-  @Column(nullable = false)
-  private String category;
-  @Column(nullable = false)
-  private String batch;
+  @JoinColumn(name = "depot_id")
+  private DepotBO depot;
+
   @Column(nullable = false)
   private Long price; // 单价
-  private Long quantity; // 数量
   private Long bag; // 包装
-  private Long subTotal; // 总额
+  private Long subtotal; // 总额
 
 }
