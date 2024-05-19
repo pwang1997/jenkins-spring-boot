@@ -5,6 +5,7 @@ import com.erp.erpspringboot.core.users.model.UserDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,7 +30,9 @@ public class DepotInDTO extends BaseDTO { // invoice
   private Long id;
 
   // Depot attributes
+  @Valid
   private DepotDTO depot;
+  private Long quantity;
 
   // Invoice attributes
   private String serialNo; // 货号

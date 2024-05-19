@@ -26,6 +26,8 @@ public class DepotOutDTO extends BaseDTO { // Sales
 
   private Long id;
   private DepotDTO depot;
+  private Long quantity; // 本次件数
+
   private Long price; // 单价
   private Long bag; // 包装
   private Long subtotal; // 总额

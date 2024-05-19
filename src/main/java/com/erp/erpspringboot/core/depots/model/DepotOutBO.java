@@ -35,6 +35,7 @@ public class DepotOutBO extends BaseBO { // Sales
   @ManyToOne
   @JoinColumn(name = "depot_id")
   private DepotBO depot;
+  private Long quantity; // 本次件数
 
   @Column(nullable = false)
   private Long price; // 单价

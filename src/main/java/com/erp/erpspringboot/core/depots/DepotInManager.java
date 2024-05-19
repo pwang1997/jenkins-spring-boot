@@ -5,9 +5,9 @@ import com.erp.erpspringboot.core.depots.model.DepotBO;
 import com.erp.erpspringboot.core.depots.model.DepotInBO;
 import com.erp.erpspringboot.utils.BOUtils;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Puck Wang
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@Transactional
 public class DepotInManager {
 
   private final DepotInDao depotInDao;
@@ -27,26 +28,18 @@ public class DepotInManager {
   }
 
   public DepotInBO create(DepotInBO depotInBO) {
-    Optional<DepotBO> depotBO = depotManager.findById();
-    if (depotBO.isEmpty()) {
-      DepotBO depotBOToCreate = DepotBO.builder().id(depotId).quantity(depotInBO.getQuantity())
-          .build();
-      depotManager.create(depotBOToCreate);
-    } else {
+    DepotBO depotBO = depotManager.createIfNotExists(depotInBO.getDepot());
 
-    }
-
+    depotInBO.setDepot(depotBO);
 
     BOUtils.setDirtyFields(depotInBO);
 
-    DepotInBO save = depotInDao.save(depotInBO);
-    return save;
+    return depotInDao.save(depotInBO);
   }
 
   public DepotInBO update(DepotInBO depotInBO) {
     BOUtils.setDirtyFields(depotInBO);
-    DepotInBO updated = depotInDao.save(depotInBO);
-    return updated;
+    return depotInDao.save(depotInBO);
   }
 
   public void delete(Long id) {
@@ -59,4 +52,5 @@ public class DepotInManager {
         )
         .toList();
   }
+
 }

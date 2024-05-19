@@ -33,6 +33,5 @@ public class DepotDTO extends BaseDTO {
   private String productCategory;
   @NotEmpty
   private String batch;
-  @NotEmpty
   private Long quantity;
 }

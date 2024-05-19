@@ -37,9 +37,9 @@ public class DepotInBO extends BaseBO { // invoice
   @ManyToOne
   @JoinColumn(name = "depot_id")
   private DepotBO depot;
+  private Long quantity; // 本次件数
 
   // Invoice attributes
-
   private String serialNo; // 货号
   private String makeupId; // 批号柜号
   private String reference; // 可溯源编号
