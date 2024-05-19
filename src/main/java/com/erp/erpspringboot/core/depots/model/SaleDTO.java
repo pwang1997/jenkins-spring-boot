@@ -22,7 +22,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @SuperBuilder
 @JsonInclude
-public class DepotOutDTO extends BaseDTO { // Sales
+public class SaleDTO extends BaseDTO { // Sales
 
   private Long id;
   private DepotDTO depot;

@@ -1,8 +1,8 @@
 package com.erp.erpspringboot.core.depots.mapper;
 
 import com.erp.erpspringboot.base.mappers.BaseMapper;
-import com.erp.erpspringboot.core.depots.model.DepotOutBO;
-import com.erp.erpspringboot.core.depots.model.DepotOutDTO;
+import com.erp.erpspringboot.core.depots.model.SaleBO;
+import com.erp.erpspringboot.core.depots.model.SaleDTO;
 import org.mapstruct.Mapper;
 
 /**
@@ -11,6 +11,6 @@ import org.mapstruct.Mapper;
  * @created 5/6/2024
  */
 @Mapper(componentModel = "spring")
-public interface DepotOutMapper extends BaseMapper<DepotOutBO, DepotOutDTO> {
+public interface SaleMapper extends BaseMapper<SaleBO, SaleDTO> {
 
 }

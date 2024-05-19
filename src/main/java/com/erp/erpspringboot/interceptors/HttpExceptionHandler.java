@@ -1,5 +1,6 @@
 package com.erp.erpspringboot.interceptors;
 
+import com.erp.erpspringboot.exceptions.InsufficientDepotException;
 import com.erp.erpspringboot.utils.ExceptionUtils;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class HttpExceptionHandler {
     return ResponseEntity.badRequest().body(validationMessages);
   }
 
-  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  @ExceptionHandler({MethodArgumentTypeMismatchException.class, InsufficientDepotException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ResponseEntity<String> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
     return ResponseEntity.badRequest().body(ex.getMessage());

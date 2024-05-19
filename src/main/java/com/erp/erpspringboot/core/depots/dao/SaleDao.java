@@ -1,6 +1,6 @@
 package com.erp.erpspringboot.core.depots.dao;
 
-import com.erp.erpspringboot.core.depots.model.DepotOutBO;
+import com.erp.erpspringboot.core.depots.model.SaleBO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @project erp-spring-boot
  * @created 5/6/2024
  */
-public interface DepotOutDao extends JpaRepository<DepotOutBO, Long> {
+public interface SaleDao extends JpaRepository<SaleBO, Long> {
 
 }

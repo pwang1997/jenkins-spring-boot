@@ -26,7 +26,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepotOutBO extends BaseBO { // Sales
+public class SaleBO extends BaseBO { // Sales
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
