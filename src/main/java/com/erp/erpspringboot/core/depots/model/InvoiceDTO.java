@@ -25,7 +25,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @SuperBuilder
 @JsonInclude
-public class DepotInDTO extends BaseDTO { // invoice
+public class InvoiceDTO extends BaseDTO { // invoice
 
   private Long id;
 

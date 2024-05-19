@@ -50,4 +50,8 @@ public class DepotManager {
     }
     return findById(depotBO.getId());
   }
+
+  public DepotBO updateDepotQuantity(Long id, Long quantity) {
+    return depotDao.updateQuantityById(id, quantity);
+  }
 }

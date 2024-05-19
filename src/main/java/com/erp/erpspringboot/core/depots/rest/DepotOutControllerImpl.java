@@ -1,14 +1,12 @@
 package com.erp.erpspringboot.core.depots.rest;
 
-import static com.erp.erpspringboot.constant.RestEndpoint.API_V1_DEPOT_IN;
 import static com.erp.erpspringboot.constant.RestEndpoint.API_V1_DEPOT_OUT;
 
 import com.erp.erpspringboot.base.models.Response;
 import com.erp.erpspringboot.base.models.Responses;
-import com.erp.erpspringboot.core.depots.DepotInManager;
+import com.erp.erpspringboot.core.depots.InvoiceManager;
 import com.erp.erpspringboot.core.depots.DepotManager;
-import com.erp.erpspringboot.core.depots.mapper.DepotInMapper;
-import com.erp.erpspringboot.core.depots.model.DepotInDTO;
+import com.erp.erpspringboot.core.depots.mapper.InvoiceMapper;
 import com.erp.erpspringboot.core.depots.model.DepotOutDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,14 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class DepotOutControllerImpl implements DepotOutController {
 
   private final DepotManager depotManager;
-  private final DepotInMapper depotInMapper;
-  private final DepotInManager depotInManager;
+  private final InvoiceMapper invoiceMapper;
+  private final InvoiceManager invoiceManager;
 
-  public DepotOutControllerImpl(DepotManager depotManager, DepotInMapper depotInMapper,
-      DepotInManager depotInManager) {
+  public DepotOutControllerImpl(DepotManager depotManager, InvoiceMapper invoiceMapper,
+      InvoiceManager invoiceManager) {
     this.depotManager = depotManager;
-    this.depotInMapper = depotInMapper;
-    this.depotInManager = depotInManager;
+    this.invoiceMapper = invoiceMapper;
+    this.invoiceManager = invoiceManager;
   }
 
   @Override
