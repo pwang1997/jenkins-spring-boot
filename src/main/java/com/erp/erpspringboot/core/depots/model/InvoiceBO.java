@@ -67,6 +67,7 @@ public class InvoiceBO extends BaseBO { // invoice
   @JoinColumn(name = "sales_person_id")
   private UserBO salesPerson;  // 业务员
   private String carLicense; // 车牌
+  private boolean isDeleted;
 
   private String commentOne;
   private String commentTwo;

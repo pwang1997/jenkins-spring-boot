@@ -31,4 +31,5 @@ public class SaleDTO extends BaseDTO { // Sales
   private Long price; // 单价
   private Long bag; // 包装
   private Long subtotal; // 总额
+  private boolean isDeleted;
 }

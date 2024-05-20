@@ -58,6 +58,7 @@ public class InvoiceDTO extends BaseDTO { // invoice
   private UserDTO buyer; // 采购
   private UserDTO salesPerson;  // 业务员
   private String carLicense; // 车牌
+  private boolean isDeleted;
 
   private String commentOne;
   private String commentTwo;
