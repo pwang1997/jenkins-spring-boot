@@ -21,13 +21,13 @@ import lombok.ToString;
  * @project erp-spring-boot
  * @created 5/16/2024
  */
-@Entity(name = "depot_ins")
+@Entity(name = "invoices")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class InvoiceBO extends BaseBO { // invoice
+public class InvoiceBO extends BaseBO {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

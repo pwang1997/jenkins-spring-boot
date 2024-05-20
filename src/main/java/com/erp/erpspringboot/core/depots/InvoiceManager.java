@@ -3,6 +3,7 @@ package com.erp.erpspringboot.core.depots;
 import com.erp.erpspringboot.core.depots.dao.InvoiceDao;
 import com.erp.erpspringboot.core.depots.model.DepotBO;
 import com.erp.erpspringboot.core.depots.model.InvoiceBO;
+import com.erp.erpspringboot.exceptions.InsufficientDepotException;
 import com.erp.erpspringboot.utils.BOUtils;
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
@@ -44,18 +45,30 @@ public class InvoiceManager {
     InvoiceBO originalInvoiceBO = invoiceDao.findById(id).get();
     long quantityDiff = invoiceBO.getQuantity() - originalInvoiceBO.getQuantity();
 
+    Long overallQuantity = invoiceBO.getDepot().getQuantity();
     // Update depot quantity in-place for particular depot_in record
-    if (quantityDiff != 0) {
-      depotManager.updateDepotQuantity(depotBO.getId(), quantityDiff);
+    if (overallQuantity + quantityDiff < 0) {
+      throw new InsufficientDepotException();
     }
-
     BOUtils.setDirtyFields(invoiceBO);
-    return invoiceDao.save(invoiceBO);
+    InvoiceBO updatedInvoice = invoiceDao.save(invoiceBO);
+    depotManager.updateDepotQuantity(depotBO.getId(), overallQuantity + quantityDiff);
+
+    return updatedInvoice;
   }
 
-  // TODO: doubt if we need delete here
-  //  may consider soft delete with depot quantity decrement
   public void delete(Long id) {
+    InvoiceBO invoiceBO = invoiceDao.findById(id).get();
+
+    DepotBO depot = invoiceBO.getDepot();
+
+    Long overallQuantity = depot.getQuantity();
+
+    if (overallQuantity < invoiceBO.getQuantity()) {
+      throw new InsufficientDepotException();
+    }
+    depotManager.updateDepotQuantity(depot.getId(), overallQuantity - invoiceBO.getQuantity());
+    invoiceDao.softDeleteById(id);
   }
 
   public List<InvoiceBO> list(int pageNumber, int pageSize) {

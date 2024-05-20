@@ -20,13 +20,13 @@ import lombok.ToString;
  * @created 5/16/2024
  */
 
-@Entity(name = "depot_outs")
+@Entity(name = "sales")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class SaleBO extends BaseBO { // Sales
+public class SaleBO extends BaseBO {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

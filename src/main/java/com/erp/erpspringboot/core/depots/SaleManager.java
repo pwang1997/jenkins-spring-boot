@@ -32,7 +32,7 @@ public class SaleManager {
     DepotBO depotBO = depotManager.findById(saleBO.getDepot().getId());
     long quantityAfterDepotOut = saleBO.getDepot().getQuantity() - saleBO.getQuantity();
     if (quantityAfterDepotOut < 0) {
-      throw new InsufficientDepotException("库存不足");
+      throw new InsufficientDepotException();
     }
 
     depotBO = depotManager.updateDepotQuantity(depotBO.getId(), quantityAfterDepotOut);
@@ -50,9 +50,11 @@ public class SaleManager {
     SaleBO originalSaleBO = saleDao.findById(id).get();
     long quantityDiff = saleBO.getQuantity() - originalSaleBO.getQuantity();
 
+    long overallQuantity = saleBO.getDepot().getQuantity();
+
     // Update depot quantity in-place for particular depot_in record
-    if (quantityDiff < 0) {
-      throw new InsufficientDepotException("库存不足");
+    if (overallQuantity + quantityDiff < 0) {
+      throw new InsufficientDepotException();
     }
     depotManager.updateDepotQuantity(depotBO.getId(), quantityDiff);
 
@@ -60,9 +62,21 @@ public class SaleManager {
     return saleDao.save(saleBO);
   }
 
-  // TODO: doubt if we need delete here
-  //  may consider soft delete with depot quantity decrement
   public void delete(Long id) {
+    SaleBO saleBO = saleDao.findById(id).get();
+    Long quantityToDelete = saleBO.getQuantity();
+
+    DepotBO depot = saleBO.getDepot();
+    Long overallQuantity = depot.getQuantity();
+
+    if (overallQuantity < quantityToDelete) {
+      throw new InsufficientDepotException();
+    }
+
+    depotManager.updateDepotQuantity(depot.getId(), overallQuantity - quantityToDelete);
+
+    saleDao.softDeleteById(id);
+
   }
 
   public List<SaleBO> list(int pageNumber, int pageSize) {
