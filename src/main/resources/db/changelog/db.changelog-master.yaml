@@ -17,3 +17,9 @@ databaseChangeLog:
   - include:
       file: classpath:/db/changelog/changes/006-insert-user-group-permission-assn.sql
       author: pwang
+  - include:
+      file: classpath:/db/changelog/changes/007_1-insert-admin-user-group-permission.sql
+      author: pwang
+  - include:
+      file: classpath:/db/changelog/changes/007_2-insert-admin-user-group-permission.sql
+      author: pwang

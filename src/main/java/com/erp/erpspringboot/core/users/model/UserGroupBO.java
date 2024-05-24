@@ -1,6 +1,7 @@
 package com.erp.erpspringboot.core.users.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +11,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +29,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserGroupBO {
 
   @Id
@@ -37,7 +40,7 @@ public class UserGroupBO {
   private String description;
   private String comment;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_group_permission_assn", joinColumns = {
       @JoinColumn(name = "user_group_id")}, inverseJoinColumns = {
       @JoinColumn(name = "permission_id")},

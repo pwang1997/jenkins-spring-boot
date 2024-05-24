@@ -19,7 +19,6 @@ public class ExceptionUtils {
     Map<String, String> validationMessages = new HashMap<>();
 
     for (FieldError fe : fieldErrors) {
-      System.out.println(fe.getDefaultMessage());
       validationMessages.put(fe.getField(), fe.getDefaultMessage());
     }
 

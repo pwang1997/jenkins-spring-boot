@@ -1,5 +1,7 @@
 package com.erp.erpspringboot.core.users.mapper;
 
+import com.erp.erpspringboot.core.users.model.PermissionBO;
+import com.erp.erpspringboot.core.users.model.PermissionDTO;
 import org.mapstruct.Mapper;
 
 /**
@@ -9,5 +11,7 @@ import org.mapstruct.Mapper;
  */
 @Mapper(componentModel = "spring")
 public interface PermissionMapper {
+  PermissionDTO mapToDTO(PermissionBO b);
 
+  PermissionBO mapToBO(PermissionDTO d);
 }
