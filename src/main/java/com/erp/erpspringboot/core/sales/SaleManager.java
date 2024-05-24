@@ -1,8 +1,8 @@
 package com.erp.erpspringboot.core.sales;
 
 import com.erp.erpspringboot.core.depots.DepotManager;
-import com.erp.erpspringboot.core.sales.dao.SaleDao;
 import com.erp.erpspringboot.core.depots.model.DepotBO;
+import com.erp.erpspringboot.core.sales.dao.SaleDao;
 import com.erp.erpspringboot.core.sales.model.SaleBO;
 import com.erp.erpspringboot.exceptions.InsufficientDepotException;
 import com.erp.erpspringboot.utils.BOUtils;
@@ -76,8 +76,7 @@ public class SaleManager {
 
     depotManager.updateDepotQuantity(depot.getId(), overallQuantity - quantityToDelete);
 
-    saleDao.softDeleteById(id);
-
+    softDelete(id, saleBO);
   }
 
   public List<SaleBO> list(int pageNumber, int pageSize) {
@@ -87,4 +86,8 @@ public class SaleManager {
         .toList();
   }
 
+  private void softDelete(Long id, SaleBO saleBO) {
+    saleBO.setDeleted(true);
+    update(id, saleBO);
+  }
 }

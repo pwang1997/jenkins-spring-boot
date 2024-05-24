@@ -25,11 +25,11 @@ public class DepotManager {
   }
 
   public DepotBO create(DepotBO depotBO) {
-    return depotDao.save(depotBO);
+    return depotDao.saveAndFlush(depotBO);
   }
 
   public DepotBO update(DepotBO depotBO) {
-    return depotDao.save(depotBO);
+    return depotDao.saveAndFlush(depotBO);
   }
 
   public List<DepotBO> list(int pageNumber, int pageSize) {
@@ -52,6 +52,8 @@ public class DepotManager {
   }
 
   public DepotBO updateDepotQuantity(Long id, Long quantity) {
-    return depotDao.updateQuantityById(id, quantity);
+    depotDao.updateQuantityById(id, quantity);
+    depotDao.flush();
+    return depotDao.findById(id).get();
   }
 }

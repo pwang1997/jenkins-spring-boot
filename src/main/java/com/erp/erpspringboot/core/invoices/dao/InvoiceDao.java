@@ -2,9 +2,6 @@ package com.erp.erpspringboot.core.invoices.dao;
 
 import com.erp.erpspringboot.core.invoices.model.InvoiceBO;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * @author Puck Wang
@@ -13,10 +10,4 @@ import org.springframework.data.repository.query.Param;
  */
 public interface InvoiceDao extends JpaRepository<InvoiceBO, Long> {
 
-  @Modifying
-  @Query(
-      nativeQuery = true,
-      value = "UPDATE invoices SET is_deleted = TRUE WHERE id = :id"
-  )
-  void softDeleteById(@Param("id") Long id);
 }

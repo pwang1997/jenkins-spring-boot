@@ -15,7 +15,8 @@ public interface DepotDao extends JpaRepository<DepotBO, Long> {
 
   @Modifying
   @Query(
-      "UPDATE depots SET quantity = quantity + :quantity WHERE id = :id"
+      value = "UPDATE depots SET quantity = quantity + :quantity WHERE id = :id",
+      nativeQuery = true
   )
-  DepotBO updateQuantityById(@Param("id") Long id, @Param("quantity") Long quantity);
+  void updateQuantityById(@Param("id") Long id, @Param("quantity") Long quantity);
 }
