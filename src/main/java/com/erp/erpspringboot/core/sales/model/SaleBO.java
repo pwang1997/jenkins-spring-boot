@@ -1,6 +1,7 @@
-package com.erp.erpspringboot.core.depots.model;
+package com.erp.erpspringboot.core.sales.model;
 
 import com.erp.erpspringboot.base.models.BaseBO;
+import com.erp.erpspringboot.core.depots.model.DepotBO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

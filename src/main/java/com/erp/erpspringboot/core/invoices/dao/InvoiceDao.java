@@ -1,6 +1,6 @@
-package com.erp.erpspringboot.core.depots.dao;
+package com.erp.erpspringboot.core.invoices.dao;
 
-import com.erp.erpspringboot.core.depots.model.InvoiceBO;
+import com.erp.erpspringboot.core.invoices.model.InvoiceBO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

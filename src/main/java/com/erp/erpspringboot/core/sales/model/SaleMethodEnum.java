@@ -1,4 +1,4 @@
-package com.erp.erpspringboot.core.depots.model;
+package com.erp.erpspringboot.core.sales.model;
 
 /**
  * @author Puck Wang

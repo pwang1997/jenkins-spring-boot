@@ -1,8 +1,8 @@
-package com.erp.erpspringboot.core.depots.rest;
+package com.erp.erpspringboot.core.invoices.rest;
 
 import com.erp.erpspringboot.base.models.Response;
 import com.erp.erpspringboot.base.models.Responses;
-import com.erp.erpspringboot.core.depots.model.InvoiceDTO;
+import com.erp.erpspringboot.core.invoices.model.InvoiceDTO;
 import org.springframework.http.ResponseEntity;
 
 /**

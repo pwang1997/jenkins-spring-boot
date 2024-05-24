@@ -1,38 +1,46 @@
-package com.erp.erpspringboot.core.depots.model;
+package com.erp.erpspringboot.core.invoices.model;
 
-import com.erp.erpspringboot.base.models.BaseDTO;
-import com.erp.erpspringboot.core.users.model.UserDTO;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.erp.erpspringboot.base.models.BaseBO;
+import com.erp.erpspringboot.core.depots.model.AccountMethodEnum;
+import com.erp.erpspringboot.core.depots.model.DepotBO;
+import com.erp.erpspringboot.core.sales.model.SaleMethodEnum;
+import com.erp.erpspringboot.core.users.model.UserBO;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.Valid;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-import org.springframework.validation.annotation.Validated;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Puck Wang
  * @project erp-spring-boot
  * @created 5/16/2024
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Entity(name = "invoices")
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Validated
-@SuperBuilder
-@JsonInclude
-public class InvoiceDTO extends BaseDTO { // invoice
+public class InvoiceBO extends BaseBO {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   // Depot attributes
-  @Valid
-  private DepotDTO depot;
-  private Long quantity;
+  @ManyToOne
+  @JoinColumn(name = "depot_id")
+  private DepotBO depot;
+  private Long quantity; // 本次件数
 
   // Invoice attributes
   private String serialNo; // 货号
@@ -55,8 +63,12 @@ public class InvoiceDTO extends BaseDTO { // invoice
   private SaleMethodEnum saleMethod; // 销售方式
 
   //  Internal attributes
-  private UserDTO buyer; // 采购
-  private UserDTO salesPerson;  // 业务员
+  @ManyToOne
+  @JoinColumn(name = "buyer_id")
+  private UserBO buyer; // 采购
+  @ManyToOne
+  @JoinColumn(name = "sales_person_id")
+  private UserBO salesPerson;  // 业务员
   private String carLicense; // 车牌
   private boolean isDeleted;
 

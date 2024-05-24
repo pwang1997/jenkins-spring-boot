@@ -1,8 +1,8 @@
-package com.erp.erpspringboot.core.depots.mapper;
+package com.erp.erpspringboot.core.invoices.mapper;
 
 import com.erp.erpspringboot.base.mappers.BaseMapper;
-import com.erp.erpspringboot.core.depots.model.InvoiceBO;
-import com.erp.erpspringboot.core.depots.model.InvoiceDTO;
+import com.erp.erpspringboot.core.invoices.model.InvoiceBO;
+import com.erp.erpspringboot.core.invoices.model.InvoiceDTO;
 import org.mapstruct.Mapper;
 
 /**

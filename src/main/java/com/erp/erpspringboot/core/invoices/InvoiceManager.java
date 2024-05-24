@@ -1,8 +1,9 @@
-package com.erp.erpspringboot.core.depots;
+package com.erp.erpspringboot.core.invoices;
 
-import com.erp.erpspringboot.core.depots.dao.InvoiceDao;
+import com.erp.erpspringboot.core.depots.DepotManager;
+import com.erp.erpspringboot.core.invoices.dao.InvoiceDao;
 import com.erp.erpspringboot.core.depots.model.DepotBO;
-import com.erp.erpspringboot.core.depots.model.InvoiceBO;
+import com.erp.erpspringboot.core.invoices.model.InvoiceBO;
 import com.erp.erpspringboot.exceptions.InsufficientDepotException;
 import com.erp.erpspringboot.utils.BOUtils;
 import java.util.List;

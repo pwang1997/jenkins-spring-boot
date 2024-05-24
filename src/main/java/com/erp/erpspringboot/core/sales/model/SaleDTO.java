@@ -1,6 +1,7 @@
-package com.erp.erpspringboot.core.depots.model;
+package com.erp.erpspringboot.core.sales.model;
 
 import com.erp.erpspringboot.base.models.BaseDTO;
+import com.erp.erpspringboot.core.depots.model.DepotDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;

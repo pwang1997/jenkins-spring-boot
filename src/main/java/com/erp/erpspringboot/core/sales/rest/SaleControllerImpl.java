@@ -1,15 +1,13 @@
-package com.erp.erpspringboot.core.depots.rest;
+package com.erp.erpspringboot.core.sales.rest;
 
 import static com.erp.erpspringboot.constant.RestEndpoint.API_V1_DEPOT_OUT;
 
 import com.erp.erpspringboot.base.models.Response;
 import com.erp.erpspringboot.base.models.Responses;
-import com.erp.erpspringboot.core.depots.SaleManager;
-import com.erp.erpspringboot.core.depots.mapper.SaleMapper;
-import com.erp.erpspringboot.core.depots.model.InvoiceBO;
-import com.erp.erpspringboot.core.depots.model.InvoiceDTO;
-import com.erp.erpspringboot.core.depots.model.SaleBO;
-import com.erp.erpspringboot.core.depots.model.SaleDTO;
+import com.erp.erpspringboot.core.sales.SaleManager;
+import com.erp.erpspringboot.core.sales.mapper.SaleMapper;
+import com.erp.erpspringboot.core.sales.model.SaleBO;
+import com.erp.erpspringboot.core.sales.model.SaleDTO;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;

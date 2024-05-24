@@ -1,8 +1,8 @@
-package com.erp.erpspringboot.core.depots.mapper;
+package com.erp.erpspringboot.core.sales.mapper;
 
 import com.erp.erpspringboot.base.mappers.BaseMapper;
-import com.erp.erpspringboot.core.depots.model.SaleBO;
-import com.erp.erpspringboot.core.depots.model.SaleDTO;
+import com.erp.erpspringboot.core.sales.model.SaleBO;
+import com.erp.erpspringboot.core.sales.model.SaleDTO;
 import org.mapstruct.Mapper;
 
 /**

@@ -1,6 +1,6 @@
-package com.erp.erpspringboot.core.depots.dao;
+package com.erp.erpspringboot.core.sales.dao;
 
-import com.erp.erpspringboot.core.depots.model.SaleBO;
+import com.erp.erpspringboot.core.sales.model.SaleBO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
