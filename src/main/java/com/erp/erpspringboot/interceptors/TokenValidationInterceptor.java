@@ -26,7 +26,6 @@ public class TokenValidationInterceptor  implements HandlerInterceptor {
       throws Exception {
     // Get the Authorization header value (Bearer token)
     String token = request.getHeader("X-Token");
-
     // Validate the token (you can implement your token validation logic here)
     if (isValidToken(request, token)) {
       return true; // Allow the request to proceed

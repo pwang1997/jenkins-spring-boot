@@ -15,9 +15,10 @@ public class CorsConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/api/**")
-        .allowedOrigins("*") // Replace with your React app's domain
+        .allowedOrigins("http://localhost:3000") // Replace with your React app's domain
         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
         .allowedHeaders("*") // Allow custom headers
+        .allowCredentials(true)
         .maxAge(3600); // Max age of CORS preflight cache
   }
 }
